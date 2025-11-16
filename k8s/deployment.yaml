@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: olivetti-classifier-deployment
+  labels:
+    app: olivetti-classifier
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: olivetti-classifier
+  template:
+    metadata:
+      labels:
+        app: olivetti-classifier
+    spec:
+      containers:
+      - name: olivetti-classifier
+        image: pallavis24/olivetti-classifier:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+          name: http
+          protocol: TCP
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
