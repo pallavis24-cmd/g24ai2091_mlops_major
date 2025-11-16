@@ -22,3 +22,27 @@ Thumbs.db
 # Docs
 *.pdf
 *.docx
+# Dockerignore file to exclude unnecessary files from Docker build context
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.vscode/
+.idea/
+.git/
+.gitignore
+*.md
+!README.md
+.DS_Store
+Thumbs.db
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+.env
+G24AI2091_Major.docx
+PGD_MLOps_Major_Assignment.pdf

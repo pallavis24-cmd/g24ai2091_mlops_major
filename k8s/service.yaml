@@ -13,6 +13,7 @@ spec:
     protocol: TCP
     port: 80
     targetPort: 5000
+  # Session affinity to route requests from same client to same pod
   sessionAffinity: ClientIP
   sessionAffinityConfig:
     clientIP:

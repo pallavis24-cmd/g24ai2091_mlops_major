@@ -5,6 +5,7 @@ metadata:
   labels:
     app: olivetti-classifier
 spec:
+  # Ensure 3 replicas are always running
   replicas: 3
   selector:
     matchLabels:
@@ -16,12 +17,14 @@ spec:
     spec:
       containers:
       - name: olivetti-classifier
+        # Replace with your Docker Hub username
         image: pallavis24/olivetti-classifier:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 5000
           name: http
           protocol: TCP
+        # Resource limits and requests
         resources:
           requests:
             memory: "512Mi"
@@ -29,6 +32,7 @@ spec:
           limits:
             memory: "1Gi"
             cpu: "500m"
+        # Liveness probe to check if container is running
         livenessProbe:
           httpGet:
             path: /health
@@ -37,6 +41,7 @@ spec:
           periodSeconds: 10
           timeoutSeconds: 5
           failureThreshold: 3
+        # Readiness probe to check if container is ready to serve traffic
         readinessProbe:
           httpGet:
             path: /health
@@ -45,3 +50,32 @@ spec:
           periodSeconds: 5
           timeoutSeconds: 3
           failureThreshold: 3
+        env:
+        - name: FLASK_ENV
+          value: "production"
+---
+# Horizontal Pod Autoscaler (optional)
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: olivetti-classifier-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: olivetti-classifier-deployment
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

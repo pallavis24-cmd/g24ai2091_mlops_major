@@ -6,6 +6,12 @@
     <title>Olivetti Face Classifier</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -15,6 +21,7 @@
             align-items: center;
             padding: 20px;
         }
+        
         .container {
             background: white;
             border-radius: 20px;
@@ -23,18 +30,21 @@
             max-width: 600px;
             width: 100%;
         }
+        
         h1 {
             color: #333;
             text-align: center;
             margin-bottom: 10px;
             font-size: 2em;
         }
+        
         .subtitle {
             text-align: center;
             color: #666;
             margin-bottom: 30px;
             font-size: 0.9em;
         }
+        
         .upload-area {
             border: 3px dashed #667eea;
             border-radius: 15px;
@@ -44,16 +54,28 @@
             cursor: pointer;
             background: #f8f9ff;
         }
+        
         .upload-area:hover {
             border-color: #764ba2;
             background: #f0f1ff;
         }
+        
         .upload-area.dragover {
             border-color: #764ba2;
             background: #e8e9ff;
         }
         .upload-icon { font-size: 4em; margin-bottom: 15px; }
         input[type="file"] { display: none; }
+        
+        .upload-icon {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
         .btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -66,24 +88,29 @@
             transition: transform 0.2s;
             width: 100%;
         }
+        
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
+        
         .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
+        
         #preview {
             margin-top: 20px;
             text-align: center;
         }
+        
         #previewImage {
             max-width: 100%;
             max-height: 300px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
+        
         #result {
             margin-top: 25px;
             padding: 20px;
@@ -92,20 +119,24 @@
             font-size: 1.1em;
             display: none;
         }
+        
         .result-success {
             background: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
+        
         .result-error {
             background: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+        
         .prediction-details {
             margin-top: 15px;
             font-size: 0.95em;
         }
+        
         .confidence-bar {
             background: #e0e0e0;
             border-radius: 10px;
@@ -113,6 +144,7 @@
             margin-top: 10px;
             overflow: hidden;
         }
+        
         .confidence-fill {
             background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
             height: 100%;
@@ -124,6 +156,7 @@
             font-size: 0.8em;
             font-weight: bold;
         }
+        
         .loader {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #667eea;
@@ -134,10 +167,12 @@
             margin: 20px auto;
             display: none;
         }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        
         .info-box {
             background: #e7f3ff;
             border-left: 4px solid #2196F3;
@@ -186,6 +221,10 @@
         
         uploadArea.addEventListener('click', () => fileInput.click());
         
+        // Click to upload
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
+        // Drag and drop handlers
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             uploadArea.classList.add('dragover');
@@ -204,6 +243,7 @@
             }
         });
         
+        // File input change
         fileInput.addEventListener('change', (e) => {
             if (e.target.files.length > 0) {
                 handleFile(e.target.files[0]);
@@ -223,12 +263,14 @@
             reader.readAsDataURL(file);
         }
         
+        // Predict button click
         predictBtn.addEventListener('click', async () => {
             if (!selectedFile) return;
             
             const formData = new FormData();
             formData.append('file', selectedFile);
             
+            // Show loader
             loader.style.display = 'block';
             predictBtn.disabled = true;
             result.style.display = 'none';
@@ -243,6 +285,11 @@
                 
                 loader.style.display = 'none';
                 predictBtn.disabled = false;
+                // Hide loader
+                loader.style.display = 'none';
+                predictBtn.disabled = false;
+                
+                // Show result
                 result.style.display = 'block';
                 
                 if (data.success) {
