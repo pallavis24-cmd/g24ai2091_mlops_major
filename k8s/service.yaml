@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: olivetti-classifier-service
+  labels:
+    app: olivetti-classifier
+spec:
+  type: LoadBalancer
+  selector:
+    app: olivetti-classifier
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 5000
+  # Session affinity to route requests from same client to same pod
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
