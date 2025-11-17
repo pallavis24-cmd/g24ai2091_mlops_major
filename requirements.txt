@@ -1,4 +1,9 @@
-scikit-learn>=1.0.0
+* a5deb89 (HEAD -> main, origin/main) Add Flask app, Dockerfile, and Kubernetes manifests
+* cbd8f30 (origin/dev, dev) Add train.py, test.py, requirements.txt, and CI/CD workflow
+* a2c6042 (master) Initial commit: Add README.md and .gitignore* a5deb89 (HEAD -> main, origin/main) Add Flask app, Dockerfile, and Kubernetes manifests
+* cbd8f30 (origin/dev, dev) Add train.py, test.py, requirements.txt, and CI/CD workflow
+* a2c6042 (master) Initial commit: Add README.md and .gitignorescikit-learn>=1.0.0
+scipy>=1.7.0
 joblib>=1.0.0
 numpy>=1.21.0
 flask>=2.0.0
