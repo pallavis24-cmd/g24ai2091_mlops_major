@@ -29,9 +29,15 @@ def main():
     print(f"\nTraining set size: {len(X_train)}")
     print(f"Test set size: {len(X_test)}")
     
-    # Create and train the DecisionTreeClassifier
+    # Create and train the DecisionTreeClassifier with optimized parameters
     print("\nTraining DecisionTreeClassifier...")
-    clf = DecisionTreeClassifier(random_state=42, max_depth=20)
+    clf = DecisionTreeClassifier(
+        random_state=42,
+        max_depth=30,
+        min_samples_split=2,
+        min_samples_leaf=1,
+        criterion='gini'
+    )
     clf.fit(X_train, y_train)
     
     # Calculate training accuracy
