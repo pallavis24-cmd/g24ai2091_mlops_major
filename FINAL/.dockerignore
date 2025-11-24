@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+*.md
+*.pdf
+*.docx
+G24AI2091_Major.docx
+G24AI2091_Major.pdf
+
+# Kubernetes
+k8s/
+
+# GitHub Actions
+.github/
+
+# Logs
+*.log
