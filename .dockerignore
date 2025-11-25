@@ -1,3 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+savedmodel.pth
+
+# Virtual env
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+
+# Docs
+*.pdf
+*.docx
 # Dockerignore file to exclude unnecessary files from Docker build context
 __pycache__/
 *.py[cod]

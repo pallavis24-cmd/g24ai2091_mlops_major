@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Olivetti Face Classifier</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         * {
             margin: 0;
             padding: 0;
@@ -63,6 +64,8 @@
             border-color: #764ba2;
             background: #e8e9ff;
         }
+        .upload-icon { font-size: 4em; margin-bottom: 15px; }
+        input[type="file"] { display: none; }
         
         .upload-icon {
             font-size: 4em;
@@ -216,6 +219,8 @@
         const result = document.getElementById('result');
         let selectedFile = null;
         
+        uploadArea.addEventListener('click', () => fileInput.click());
+        
         // Click to upload
         uploadArea.addEventListener('click', () => fileInput.click());
         
@@ -278,6 +283,8 @@
                 
                 const data = await response.json();
                 
+                loader.style.display = 'none';
+                predictBtn.disabled = false;
                 // Hide loader
                 loader.style.display = 'none';
                 predictBtn.disabled = false;

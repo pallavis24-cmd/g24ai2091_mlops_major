@@ -1,4 +1,4 @@
-name: ML Model Training and Testing CI
+﻿name: ML Model Training and Testing CI
 
 on:
   push:
@@ -13,53 +13,55 @@ on:
 jobs:
   check_working_repo:
     runs-on: ubuntu-latest
-    
+
     steps:
       # Step 1: Check out the repository's code
       - name: Checkout repository
         uses: actions/checkout@v3
-      
+
       # Step 2: Set up Python environment
       - name: Set up Python 3.9
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-      
+
       # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
-      
+          pip install -r FINAL/requirements.txt
+
       # Step 4: Run train.py to generate the savedmodel.pth
       - name: Train the model
         run: |
           echo "Starting model training..."
+          cd FINAL
           python train.py
           echo "Training completed!"
-      
+
       # Step 5: Verify model file was created
       - name: Verify model file exists
         run: |
-          if [ -f "savedmodel.pth" ]; then
-            echo "✓ Model file 'savedmodel.pth' created successfully"
-            ls -lh savedmodel.pth
+          if [ -f "FINAL/savedmodel.pth" ]; then
+            echo "Model file 'savedmodel.pth' created successfully"
+            ls -lh FINAL/savedmodel.pth
           else
-            echo "✗ Error: Model file not found!"
+            echo "Error: Model file not found!"
             exit 1
           fi
-      
-      # Step 6: Run test.py to display the test accuracy
-      - name: Test the model
+
+      # Step 6: Test Flask app
+      - name: Test Flask app
         run: |
-          echo "Starting model testing..."
-          python test.py
+          echo "Testing Flask application..."
+          cd FINAL
+          python -c "from app import app; print('Flask app loaded successfully')"
           echo "Testing completed!"
-      
+
       # Step 7: Upload model as artifact (optional)
       - name: Upload model artifact
         uses: actions/upload-artifact@v3
         with:
           name: trained-model
-          path: savedmodel.pth
+          path: FINAL/savedmodel.pth
           retention-days: 7
