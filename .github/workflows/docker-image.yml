@@ -1,0 +1,47 @@
+﻿name: Docker CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "docker_cicd", "main" ]
+  pull_request:
+    branches: [ "docker_cicd", "main" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    
+    - name: Extract metadata for Docker
+      id: meta
+      uses: docker/metadata-action@v4
+      with:
+        images: pallavis24/olivetti-classifier
+        tags: |
+          type=raw,value=latest
+          type=sha,prefix={{branch}}-
+    
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v4
+      with:
+        context: ./FINAL
+        file: ./FINAL/Dockerfile
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        cache-from: type=registry,ref=pallavis24/olivetti-classifier:latest
+        cache-to: type=inline
+    
+    - name: Image digest
+      run: echo "Image pushed with digest ${{ steps.build.outputs.digest }}"
